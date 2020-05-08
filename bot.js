@@ -5,7 +5,7 @@ const querystring = require('querystring');
 const client = new Discord.Client();
 const prefix = '!';
 
-const token = 'NzA4MjYzMjA3MTM1MDg0NjI0.XrV41Q.25wqYby_x-kvrrizNscM2H3umu8';
+
 
 const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
 
@@ -81,4 +81,4 @@ client.on('message', message => {
 
 
 
-client.login(token);
+client.login(BOT_TOKEN);
