@@ -11,7 +11,7 @@ const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : s
 
 client.on("ready", () => {
     console.log('ready');
-    client.user.setActivity('lmao xd', { type: 'LOL?' });
+    client.user.setActivity('Hentai', { type: 'WATCHING' });
   });
 
 
