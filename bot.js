@@ -5,8 +5,6 @@ const querystring = require('querystring');
 const client = new Discord.Client();
 const prefix = '!';
 
-
-
 const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
 
 client.on("ready", () => {
