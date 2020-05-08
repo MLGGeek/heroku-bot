@@ -1,14 +1,62 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const fetch = require('node-fetch');
+const querystring = require('querystring');
 
-const token = 'NzA4MjYzMjA3MTM1MDg0NjI0.XrVXKw.j2YZg7wgdXR2P_xOxEGQ000jFLQ';
+const client = new Discord.Client();
+const prefix = '!';
+
+const token = 'NzA4MjYzMjA3MTM1MDg0NjI0.XrV41Q.25wqYby_x-kvrrizNscM2H3umu8';
+
+const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
 
 client.on("ready", () => {
     console.log('ready');
-    client.user.setActivity(`Hentai Girl Fantasy`);
+    client.user.setActivity('lmao xd', { type: 'LOL?' });
   });
 
-  client.on('message', message => {
+
+//urban dictionary
+
+
+  client.on('message', async message => {
+	if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+	const args = message.content.slice(prefix.length).split(/ +/);
+	const command = args.shift().toLowerCase();
+
+    if (command === 'urban') {
+		if (!args.length) {
+			return message.channel.send('You need to supply a search term!');
+		}
+
+		const query = querystring.stringify({ term: args.join(' ') });
+
+		const { list } = await fetch(`https://api.urbandictionary.com/v0/define?${query}`).then(response => response.json());
+
+		if (!list.length) {
+			return message.channel.send(`No results found for **${args.join(' ')}**.`);
+		}
+
+		const [answer] = list;
+
+		const embed = new Discord.MessageEmbed()
+			.setColor('#EFFF00')
+			.setTitle(answer.word)
+			.setURL(answer.permalink)
+			.addField('Definition', trim(answer.definition, 1024))
+			.addField('Example', trim(answer.example, 1024))
+			.addField('Rating', `${answer.thumbs_up} thumbs up. ${answer.thumbs_down} thumbs down.`);
+
+		message.channel.send(embed);
+	}
+});
+
+//ono moje
+
+
+
+
+client.on('message', message => {
     if (message.content === 'druker')
         message.channel.send('Ovo ide razrednici');
     else if (message.content === 'sirnica')
@@ -21,11 +69,16 @@ client.on("ready", () => {
         message.channel.send('Keva*');
     else if (message.content === 'mattey')
         message.channel.send('\\*puts the microphone down his throat\\* iks-de');
-    else if (message.content === 'gay')
+    else if (message.content === 'u gay')
         message.channel.send('no u');
     else if (message.content === 'tatice')
         message.channel.send('još samo 10 minutaaaaaa');
 
 });
 
-client.login(process.env.BOT_TOKEN);
+
+
+
+
+
+client.login(token);
